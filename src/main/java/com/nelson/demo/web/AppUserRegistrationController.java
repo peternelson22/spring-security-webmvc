@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/app")
+@RequestMapping("/registration")
 @AllArgsConstructor
 public class AppUserRegistrationController {
 
@@ -26,6 +26,6 @@ public class AppUserRegistrationController {
     @PostMapping
     public String registerUser(@ModelAttribute("user") AppUserRegistrationDto userRegistrationDto){
         appUserService.save(userRegistrationDto);
-        return "redirect:/app?success";
+        return "redirect:/registration?success";
     }
 }

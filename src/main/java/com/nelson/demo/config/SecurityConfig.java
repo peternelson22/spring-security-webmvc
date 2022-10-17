@@ -4,6 +4,7 @@ import com.nelson.demo.service.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -42,8 +43,8 @@ public class SecurityConfig {
                 .permitAll()
                 .and()
                 .logout()
-                .invalidateHttpSession()
-                .clearAuthentication()
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout")
                 .permitAll();
@@ -52,9 +53,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    private DaoAuthenticationProvider authenticationProvider(){
+    public DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setUserDetailsService(appUserService);
         auth.setPasswordEncoder(passwordEncoder());
+        return auth;
     }
 }
